@@ -1,5 +1,5 @@
 from Charles.charles import Individual, Population
-from Charles.selection import tournament_sel, fps, ranking
+from Charles.selection import tournament_selection, fps, ranking
 from Charles.crossover import pmx, single_point_co, two_point_crossover, uniform_crossover, discrete_crossover
 from Charles.mutation import inversion_mutation, swap_mutation, binary_mutation
 
@@ -7,7 +7,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from Data.data_sd import data, nutrients
 
-selection_list = [fps, tournament_sel, ranking]
+selection_list = [fps, tournament_selection, ranking]
 mutation_list = [inversion_mutation, binary_mutation, swap_mutation]
 crossover_list = [discrete_crossover, single_point_co, two_point_crossover, uniform_crossover]
 num_gens = 100
@@ -66,7 +66,7 @@ def crossers_for_mutation(mutation):
             # Store the best fitness values for the selection method
             if selec.__name__ == 'fps':
                 best_fitness_fps = best_fitness
-            elif selec.__name__ == 'tournament_sel':
+            elif selec.__name__ == 'tournament_selection':
                 best_fitness_tournament = best_fitness
             elif selec.__name__ == 'ranking':
                 best_fitness_ranking = best_fitness
@@ -123,7 +123,7 @@ def true_best(sele, cross, mut):
 
 
 # Dictionary to store fitness results
-best_fitness_tournament = true_best(tournament_sel, single_point_co, inversion_mutation)
+best_fitness_tournament = true_best(tournament_selection, single_point_co, inversion_mutation)
 best_fitness_ranking = true_best(ranking, single_point_co, inversion_mutation)
 best_fitness_fps = true_best(fps, single_point_co, inversion_mutation)
 

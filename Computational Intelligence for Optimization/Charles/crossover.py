@@ -13,52 +13,24 @@ def single_point_co(p1, p2):
     Returns:
         Individuals: Two offspring, resulting from the crossover.
     """
-    co_point = random.randint(1, len(p1) - 2)
+    co_point = random.randint(1, len(p1) - 2) # generates a random integer between 1 and the length of p1 minus 2
 
-    offspring1 = p1[:co_point] + p2[co_point:]
-    offspring2 = p2[:co_point] + p1[co_point:]
+    offspring1 = p1[:co_point] + p2[co_point:] # creates the first offspring by concatenating the genes before the crossover point from p1 with the genes after the crossover point from p2.
+    offspring2 = p2[:co_point] + p1[co_point:] # creates the first offspring by concatenating the genes before the crossover point from p2 with the genes after the crossover point from p1.
 
     return offspring1, offspring2
 
-    # def cycle_xo(p1, p2):
-    """Implementation of cycle crossover.
-
-    Args:
-        p1 (Individual): First parent for crossover.
-        p2 (Individual): Second parent for crossover.
-
-    Returns:
-        Individuals: Two offspring, resulting from the crossover.
-    """
-    # offspring placeholders
-    # offspring1 = [None] * len(p1)
-    # offspring2 = [None] * len(p1)
-
-    # while None in offspring1:
-    #   index = offspring1.index(None)
-    #  val1 = p1[index]
-    #  val2 = p2[index]
-
-    # copy the cycle elements
-    #   while val1 != val2:
-    #       offspring1[index] = p1[index]
-    #       offspring2[index] = p2[index]
-    ###       val2 = p2[index]
-    #     index = p1.index(val2)
-
-    # copy the rest
-    #    for element in offspring1:
-    # if element is None:
-    #        index = offspring1.index(None)
-    #        if offspring1[index] is None:
-    #               offspring1[index] = p2[index]
-    #            offspring2[index] = p1[index]
-    # print(offspring1)
-
-    # return offspring1, offspring2
-
 
 def two_point_crossover(parent1, parent2):
+    """Implementation of single point crossover.
+
+       Args:
+           parent1 (Individual): First parent for crossover.
+           parent2 (Individual): Second parent for crossover.
+
+       Returns:
+           Individuals: Two offspring, resulting from the crossover.
+    """
     length = len(parent1)
     # Select two random crossover points
     point1 = random.randint(0, length - 1)
@@ -69,21 +41,37 @@ def two_point_crossover(parent1, parent2):
         point1, point2 = point2, point1
 
     # Perform crossover
+
+    # creates the first offspring by concatenating the genes before the first crossover point from parent1,
+    # the genes between the two crossover points from parent2, and the genes after the second crossover point from parent1
     child1 = parent1[:point1] + parent2[point1:point2] + parent1[point2:]
+
+    # creates the second offspring by concatenating the genes before the first crossover point from parent2,
+    # the genes between the two crossover points from parent1, and the genes after the second crossover point from parent2
     child2 = parent2[:point1] + parent1[point1:point2] + parent2[point2:]
 
     return child1, child2
 
 
 def pmx(p1, p2):
-    xo_points = random.sample(range(len(p1)), 2)
+    """
+    Implementation of partially matched/mapped crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
+    xo_points = random.sample(range(len(p1)), 2) # the indices of two crossover points randomly sampled from the range of the length of p1 are assigned to xo_points
     xo_points.sort()
 
     def pmx_offspring(x, y):
-        o = [None] * len(x)
+        o = [None] * len(x) # offspring individual
 
-        o[xo_points[0]:xo_points[1]] = x[xo_points[0]:xo_points[1]]
-        z = set(y[xo_points[0]:xo_points[1]]) - set(x[xo_points[0]:xo_points[1]])
+        o[xo_points[0]:xo_points[1]] = x[xo_points[0]:xo_points[1]] # segment of x is assigned to o
+        z = set(y[xo_points[0]:xo_points[1]]) - set(x[xo_points[0]:xo_points[1]]) # compares same segment in y and x and isolates the values to be mapped in z
 
         assigned_values = set()
 
@@ -113,6 +101,16 @@ def pmx(p1, p2):
 
 
 def discrete_crossover(p1, p2):
+    """
+    Implementation of discrete crossover.
+
+    Args:
+        p1 (Individual): First parent for crossover.
+        p2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
     o1 = []
     o2 = []
 
@@ -132,6 +130,16 @@ def discrete_crossover(p1, p2):
 
 
 def uniform_crossover(parent1, parent2):
+    """
+    Implementation of uniform crossover.
+
+    Args:
+        parent1 (Individual): First parent for crossover.
+        parent2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
     length = len(parent1)
     child1 = []
     child2 = []
@@ -148,27 +156,5 @@ def uniform_crossover(parent1, parent2):
     return child1, child2
 
 
-def arithmetic_xo(p1, p2):
-    """Implementation of arithmetic crossover/geometric crossover with constant alpha.
-
-    Args:
-        p1 (Individual): First parent for crossover.
-        p2 (Individual): Second parent for crossover.
-
-    Returns:
-        Individuals: Two offspring, resulting from the crossover.
-    """
-    alpha = random.uniform(0, 1)
-    o1 = [None] * len(p1)
-    o2 = [None] * len(p1)
-    for i in range(len(p1)):
-        o1[i] = p1[i] * alpha + (1 - alpha) * p2[i]
-        o2[i] = p2[i] * alpha + (1 - alpha) * p1[i]
-    return o1, o2
 
 
-if __name__ == '__main__':
-    # p1, p2 = [9, 8, 4, 5, 6, 7, 1, 3, 2, 10], [8, 7, 1, 2, 3, 10, 9, 5, 4, 6]
-    p1, p2 = [0.1, 0.15, 0.3], [0.3, 0.1, 0.2]
-    o1, o2 = arithmetic_xo(p1, p2)
-    print(o1, o2)
