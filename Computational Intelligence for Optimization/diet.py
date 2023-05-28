@@ -160,6 +160,7 @@ print("Best fitness in all possibilities:", result_name, "With the value of", be
 
 
 #Tunning the best result might take some time to run
+print("Running plz wait...")
 
 # Define the parameter ranges for tuning
 population_sizes = [50, 100, 200]  # Different population sizes to try
