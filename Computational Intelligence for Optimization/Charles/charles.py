@@ -24,25 +24,30 @@ class Individual:
         #print(self.representation)
 
     def get_fitness(self):
+        total_monetary_cost = 0
         total_cost = 0
-        total_nutrient_diff = 0
+        not_empty = 0
+        nutrient_val = []
 
-        for nutrient in nutrients:
-            nutrient_name = nutrient[0]
-            nutrient_min = nutrient[1]
+        for i in range(len(self)):
+            if self[i] == 1:
+                not_empty = 1
+                total_monetary_cost += data[i][2]  # Accumulate the monetary cost
+                for j in range(3, len(data[i])):  # iterate over nutritional values
+                    nutrient_val.append(data[i][j])
 
-            nutrient_amount = 0
-            for i in range(len(self)):
-                if self[i] == 1:
-                    nutrient_amount += data[i][3]
+        if not_empty == 0:
+            for n in range(len(nutrients)):
+                total_cost += nutrients[n][1]
+        else:
+            for k in range(len(nutrients)):
+                if nutrients[k][1] - nutrient_val[k] > 0:
+                    total_cost += nutrients[k][1] - nutrient_val[k]
 
-            nutrient_diff = nutrient_amount - nutrient_min
-            if nutrient_diff > 0:
-                total_cost += nutrient_diff
-            total_nutrient_diff += abs(nutrient_diff)
-
-        fitness = total_cost + total_nutrient_diff
+        fitness = total_monetary_cost + total_cost
         return fitness
+
+
     # def get_fitness(self):
     #     total_cost = 0
     #     nutrient_shortfalls = [0] * len(nutrients)

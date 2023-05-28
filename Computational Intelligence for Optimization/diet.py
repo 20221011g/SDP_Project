@@ -92,12 +92,12 @@ def crossers_for_mutation(mutation):
 
 #REMOVE THE COMMENTS TO RUN AND COMPARE THE DIFFERENT CROSSOVERS WITH MUTATIONS
 
-#swap_mutation_result = crossers_for_mutation(swap_mutation)
-#binary_mutation_result = crossers_for_mutation(binary_mutation)
-#inversion_mutation_result = crossers_for_mutation(inversion_mutation)
-#print("The best Score with the swap mutation is " + str(swap_mutation_result))
-#print("The best Score with the binary mutation is " + str(round(binary_mutation_result, 2)))
-#print("The best Score with the inversion mutation is " + str(round(inversion_mutation_result, 2)))
+swap_mutation_result = crossers_for_mutation(swap_mutation)
+binary_mutation_result = crossers_for_mutation(binary_mutation)
+inversion_mutation_result = crossers_for_mutation(inversion_mutation)
+print("The best Score with the swap mutation is " + str(swap_mutation_result))
+print("The best Score with the binary mutation is " + str(round(binary_mutation_result, 2)))
+print("The best Score with the inversion mutation is " + str(round(inversion_mutation_result, 2)))
 
 
 # Now that we can see our best Scores, lets see the true best score.
